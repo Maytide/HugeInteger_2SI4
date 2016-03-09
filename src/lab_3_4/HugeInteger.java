@@ -38,6 +38,7 @@ public class HugeInteger {
         this.length = integer.length;
     }
     public HugeInteger (int n){
+        
         Random r = new Random();
         integer = new int[n];
         for (int i = 0; i < n - 1; i++){
@@ -47,6 +48,23 @@ public class HugeInteger {
         this.length = n;
         this.plus = true;
     }
+//    public HugeInteger (long n, boolean parseLongIntoHugeInteger){
+//        
+//        plus = n > 0;
+//        if (!plus) n = -n;
+//        
+//        long temp = n;
+//        length = 0;
+//        while (temp > 0){
+//            temp = temp/10;
+//            length++;
+//        }
+//        integer = new int[length];
+//        for (int i = 0; i < length; i++){
+//            integer[i] = (int) n % 10;
+//            n = n / 10;
+//        }
+//    }
     public BigInteger toBigInteger(){
         return new BigInteger(this.toString());
     }
@@ -75,8 +93,12 @@ public class HugeInteger {
         
     }
     public static HugeInteger multiply(HugeInteger h1, HugeInteger h2){
-        //if ()
-        if (h1.length() < 6 || h2.length() < 6) return HugeInteger.multiplyNaive(h1, h2).abs();
+        //Karatsuba algorithm
+        if (h1.length() <= 11 && h2.length() <= 11) {
+            //return new HugeInteger(Long.parseLong(h1.toString()) * Long.parseLong(h2.toString()), true);
+            return new HugeInteger(Long.toString(Long.parseLong(h1.toString()) * Long.parseLong(h2.toString())));
+            //return HugeInteger.multiplyNaive(h1, h2).abs();
+        }
         //System.out.println("Recursion O_O");
         HugeInteger h;
         int thisSize = h1.length();
@@ -343,6 +365,9 @@ public class HugeInteger {
     }
     @Override
     public String toString(){
+//        if (this.length() == 0) {
+//            return "0";
+//        }
         String s = "";
         if (this.length() == 1) {
             if (!this.plus) return "-" + Integer.toString(this.getStoredDigit(0));
@@ -354,6 +379,7 @@ public class HugeInteger {
             if (this.getStoredDigit(i) != 0) zero = false;
             if (!zero) s += this.getStoredDigit(i);
         }
+        if (zero) s = "0";
         return s;
     }
     public String toUnsignedString(){

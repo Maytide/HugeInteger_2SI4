@@ -30,19 +30,82 @@ public class Lab_3_4 {
 //        
 //        System.out.println(h);
 //        System.out.println(b);
-        HugeInteger huge1 = new HugeInteger("400001");
-        HugeInteger huge2 = new HugeInteger("100004");
-        
-        System.out.println(huge1.compareTo(huge2));
-        
+//        HugeInteger huge1 = new HugeInteger("400001");
+//        HugeInteger huge2 = new HugeInteger("100004");
+//        
+//        System.out.println(huge1.compareTo(huge2));
+        //System.out.println(new HugeInteger(-230000, true));
         //compare();
         //addition();
-        
+        testMultiply();
+        //test();
         //test2();
         //addition();
         //subtraction();
-        multiplication();
+        //multiplication();
         //naiveMultiplication();
+        
+    }
+    public static void testMultiply(){
+        for (int i = 0; i < 300; i++){
+            HugeInteger h = new HugeInteger(100);
+            BigInteger b = h.toBigInteger();
+            System.out.println("Huge: " + HugeInteger.multiply(h, h));
+            System.out.println("Big:  " + b.multiply(b) + "\n");
+            
+        }
+    }
+    public static void test(){
+        HugeInteger huge1 = new HugeInteger("400001");
+        HugeInteger huge2 = new HugeInteger("400000");
+        HugeInteger huge3 = new HugeInteger("-400001");
+        HugeInteger huge4 = new HugeInteger("-823409238409287234903242352");
+        HugeInteger huge5 = new HugeInteger("-74981379123782197389123324234234");
+        HugeInteger huge6 = new HugeInteger(100);
+        BigInteger big1 = huge1.toBigInteger();
+        BigInteger big2 = huge2.toBigInteger();
+        BigInteger big3 = huge3.toBigInteger();
+        BigInteger big4 = huge4.toBigInteger();
+        BigInteger big5 = huge5.toBigInteger();
+        
+        System.out.println("Random HugeInt of 100 digits: " + huge6);
+        
+        //Compare positive
+        System.out.println("Huge: " + huge1.compareTo(huge2));
+        System.out.println("Big: " + big1.compareTo(big2));
+        //Compare positive with negative, abs(neg) > abs(pos)
+        System.out.println("Huge:" + huge3.compareTo(huge2));
+        System.out.println("Big: " + big3.compareTo(big2));
+        
+        //Add zero
+        System.out.println("Huge:" + huge3.add(HugeInteger.ZERO));
+        System.out.println("Big: " + big3.add(BigInteger.ZERO));
+        //Generic addition tests
+        System.out.println("Huge:" + huge3.add(huge1));
+        System.out.println("Big: " + big3.add(big1));
+        System.out.println("Huge:" + huge3.add(huge3));
+        System.out.println("Big: " + big3.add(big3));
+        
+        //subtract zero
+        System.out.println("Huge:" + huge3.subtract(HugeInteger.ZERO));
+        System.out.println("Big: " + big3.subtract(BigInteger.ZERO));
+        //Generic subtraction tests
+        System.out.println("Huge:" + huge3.subtract(huge1));
+        System.out.println("Big: " + big3.subtract(big1));
+        System.out.println("Huge:" + huge3.subtract(huge3));
+        System.out.println("Big: " + big3.subtract(big3));
+        
+        //Multiplication
+        System.out.println("Huge:" + huge3.multiply(huge1));
+        System.out.println("Big: " + big3.multiply(big1));
+        System.out.println("Huge:" + huge4.multiply(huge5));
+        System.out.println("Big: " + big4.multiply(big5));
+        //Zero and one
+        System.out.println("Huge:" + huge3.multiply(HugeInteger.ZERO));
+        System.out.println("Big: " + big3.multiply(BigInteger.ZERO));
+        System.out.println("Huge:" + huge3.multiply(HugeInteger.ONE));
+        System.out.println("Big: " + big3.multiply(BigInteger.ONE));
+        
         
     }
     public static void compare(){
@@ -147,8 +210,8 @@ public class Lab_3_4 {
     }
     public static void multiplication(){
         final int n = 10000;
-        final int MAXNUMINTS = 100;
-        final int MAXRUN = 1000;
+        final int MAXNUMINTS = 10;
+        final int MAXRUN = 1;
         HugeInteger huge1, huge2, huge3 = HugeInteger.ZERO;
         BigInteger big1, big2, big3 = BigInteger.ZERO;
         long startTime, endTime;
@@ -159,14 +222,14 @@ public class Lab_3_4 {
             big1 = huge1.toBigInteger();
             big2 = huge2.toBigInteger();
             startTime = System.currentTimeMillis();
-//            for (int numRun=0; numRun < MAXRUN; numRun++){ 
-//                huge3 = HugeInteger.multiply(huge1, huge2);
-//                //big3 = big1.subtract(big2);
-//            
-//            }
             for (int numRun=0; numRun < MAXRUN; numRun++){ 
-                big1.multiply(big2);
+                huge3 = HugeInteger.multiply(huge1, huge2);
+                //big3 = big1.subtract(big2);
+            
             }
+//            for (int numRun=0; numRun < MAXRUN; numRun++){ 
+//                big1.multiply(big2);
+//            }
             //System.out.println("Big: " + big3 + " Huge: " + huge3);
             //System.out.println(huge3);
             endTime = System.currentTimeMillis();
